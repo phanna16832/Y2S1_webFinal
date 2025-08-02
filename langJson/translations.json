@@ -1,0 +1,17 @@
+{
+  "en": {
+    "order": "Order",
+    "Add to cart": "Add to cart",
+    "Subtotal": "Subtotal"
+  },
+  "zh": {
+    "order": "购买",
+    "Add to cart": "购物车",
+    "Subtotal": "结算"
+  },
+  "km": {
+    "order": "ការកម្មង់",
+    "Add to cart": "បញ្ចូលទៅកន្ត្រក",
+    "Subtotal": "សរុបរង"
+  }
+}
