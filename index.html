@@ -12,9 +12,9 @@
     ></script>
   </head>
   <body>
-    <!-- nav bar -->
-    <nav>
-      <div class="saech-box">
+    <!-- header bar -->
+    <header>
+      <div class="search-box">
         <input
           type="text"
           name="search"
@@ -22,26 +22,26 @@
           placeholder="Search Movies..."
         />
         <button>
-        <i class="fa-solid fa-search"></i>
+          <i class="fa-solid fa-search"></i>
         </button>
       </div>
       <img src="img/logo.png" alt="logo" />
       <div class="right-navbar">
         <a href="" class="ticket">
           <i class="fa-solid fa-ticket"></i>
-           <span>Ticket</span>
+          <span>Ticket</span>
         </a>
         <a href="">
           <span>Profile</span>
-         <i class="fa-solid fa-user"></i>
+          <i class="fa-solid fa-user"></i>
         </a>
         <a href="" class="bell">
           <i class="fa-solid fa-bell"></i>
         </a>
         <div class="lang">
           <span>
-          <i class="fa-solid fa-globe"></i>
-          English
+            <i class="fa-solid fa-globe"></i>
+            English
           </span>
           <div class="language-list">
             <span>English</span>
@@ -50,6 +50,19 @@
           </div>
         </div>
       </div>
-    </nav>
-  </body>
+    </header>
+    <!-- nav bar -->
+     <!-- CORRECT - One <ul> with multiple <li> -->
+<nav>
+  <ul>
+    <li><a href="">Home</a></li>
+    <li><a href="">Cinemas</a></li>
+    <li><a href="">F&B</a></li>
+  </ul>
+  <div class="cinema-location">
+    <i class="fa-solid fa-location-dot"></i>
+    All Cinemas
+  </div>
+</nav>
+</body>
 </html>
