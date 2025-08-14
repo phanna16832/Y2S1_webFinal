@@ -3,149 +3,175 @@ body,
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: #1a1a1a;
+  color: #fff;
+
 }
 
-.banner img {
-  width: clamp(300px, 50vw, 500px);
-  border-radius: 10px ;
-}
-footer{
+/*header*/
+header {
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: center;
+  backdrop-filter: blur(6px);
+  padding: 0.5rem 2rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+header img {
+  width: 120px;
+  height: auto;
+}
+
+.search-box {
+  width: 15em;
+  position: relative;
+}
+
+.search-box input[type="text"] {
+  width: 100%;
+  border: none;
+  border-radius: 15px;
+  background-color: gray;
+  color: white;
+  font-size: 14px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.search-box input[type="text"]::placeholder {
+  color: #aaa;
+}
+
+.search-box i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.right-navbar {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.right-navbar a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  border: 1.4px solid #fff;
+  border-radius: 5px;
+  padding: 0.3rem 0.8rem;
+  background-color: #1b1a1a;
+  cursor: pointer;
+}
+
+.right-navbar .bell {
+  border-radius: 50%;
+  padding: 0.3rem;
+  width: 2rem;
+  height: 2rem;
+  text-align: center;
+}
+
+.lang span {
   color: #fff;
 }
 
-/* footer div{ 
-  flex:1;
+.language-list {
+  display: none;
 }
 
-footer div:first-child{
- display: flex;
- flex-direction:column ;
-} */
+/*nav*/
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 60px;
+  /* height of header */
+  width: 100%;
+  border-bottom: 2px solid grey;
+  padding: 1rem 2rem;
+  z-index: 999;
+}
 
-/* Desktop view (>1024px) */
-@media (min-width: 1025px) {
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1b1a1a;
-    backdrop-filter: blur(6px);
-    padding: 0.5rem 2rem;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-  }
+nav ul {
+  display: flex;
+  gap: 2rem;
+}
 
-  header img {
-    width: 120px;
-    height: auto;
-  }
+nav ul li {
+  list-style-type: none;
+}
 
-  .search-box {
-    width: 15em;
-    position: relative;
-  }
+nav ul li .fa-house {
+  color: red;
+}
 
-  .search-box input[type="text"] {
-    width: 100%;
-    border: none;
-    border-radius: 15px;
-    background-color: gray;
-    color: white;
-    font-size: 14px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-  }
+nav ul li a {
+  text-decoration: none;
+  font-size: 1rem;
+  color: grey;
 
-  .search-box input[type="text"]::placeholder {
-    color: #aaa;
-  }
+}
 
-  .search-box i {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-  }
+.cinema-container {
+  margin-right: 100px;
+  position: relative;
+  display: inline-block;
+}
 
-  .right-navbar {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-  }
+.cinema-location {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
 
-  .right-navbar a {
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-    border: 1.4px solid #fff;
-    border-radius: 5px;
-    padding: 0.3rem 0.8rem;
-    background-color: #1b1a1a;
-    cursor: pointer;
-  }
+.cinema-location i {
+  color: red;
+}
 
-  .right-navbar .bell {
-    border-radius: 50%;
-    padding: 0.3rem;
-    width: 2rem;
-    height: 2rem;
-    text-align: center;
-  }
+.location {
+  display: none;
+  top: 20px;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  width:230px;
+  padding: 10px;
+  position: absolute;
+  top:100%;
+  left:0;
+  z-index:10;
+  overflow: auto;
+}
 
-  .lang span {
-    color: #fff;
-  }
+.location p {
+  font-size: 1rem;
+  padding: 3px;
+  word-wrap: wrap;
+}
+.location p:hover{
+  color: gre1
+  ;
+}
 
-  .language-list {
-    display: none;
-  }
+.location p i {
+  color: red;
+}
 
-  nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    top: 60px; /* height of header */
-    width: 100%;
-    border-bottom: 2px solid grey;
-    padding: 1rem 2rem;
-    z-index: 999;
-  }
-
-  nav ul {
-    display: flex;
-    gap: 2rem;
-  }
-
-  nav ul li {
-    list-style-type: none;
-  }
-
-  nav ul li a {
-    text-decoration: none;
-    font-size: 1rem;
-    color: grey;
-  }
-
-  .cinema-location {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    gap: 8px;
-  }
-
-  .slider {
+/*slider*/
+.slider {
   position: relative;
   width: 800px;
   height: 450px;
-  margin: 140px auto 0; /* center + space for fixed nav/header */
+  margin: 140px auto 0;
+  /* center + space for fixed nav/header */
   overflow: hidden;
   border-radius: 20px;
   background: linear-gradient(135deg, #1b1a1a, #3a3a3a);
@@ -180,19 +206,226 @@ footer div:first-child{
   border-radius: 50%;
 }
 
-.slider .prev { left: 10px; }
-.slider .next { right: 10px; }
-.pagination{
+.slider .prev {
+  left: 10px;
+}
+
+.slider .next {
+  right: 10px;
+}
+
+.pagination {
   display: flex;
   gap: 30px;
 }
-.box{
-  border:2px solid red;
-  border-radius: 8px;
-  
+
+
+.banner img {
+  width: clamp(300px, 50vw, 500px);
+  border-radius: 10px;
 }
-a{
-  color:orange;
+
+/*main*/
+/*now show*/
+.contaner{
+  display: flex;
+  justify-content: space-around;
+}
+.now-show-component {
+  max-width: 400px;
+}
+
+.pagination {
+  margin-top: 12px;
+}
+
+.pagination .box {
+  border: 2px solid grey;
+  border-radius: 5px;
+}
+.pagination .box:first-child{
+  border: 2px solid red;
+} 
+.box {
+  padding: 12px;
+}
+
+.box h1 {
+  font-size: 0.8rem;
   text-align: center;
+  justify-content: center;
 }
+
+.box span {
+  font-size: 1rem;
+  text-align: center;
+  justify-content: center;
+}
+
+
+.movies-container{
+  display: flex;
+  justify-content: space-around;
+  gap:20px;
+  padding:10px;
+  width:100%;
+}
+.movies-container img{
+  width:160px;
+}
+.movies-container h3{
+  font-size: .8rem;
+}
+
+.coming-soon-component h1,
+
+.now-show-component h1{
+  cursor: pointer;
+}
+
+.coming-soon-component h1{
+  color: grey;
+}
+.csc{
+  display: none;
+}
+.month-list{
+  border:1px solid grey;
+  padding: 8px;
+  border-radius: 8px;
+}
+.month-list:first-child{
+  border: 1px solid red;
+}
+/*coming-soon movie contain*./
+/* Make the pagination container a flex grid */
+.coming-soon-component .pagination {
+  display: flex;
+  flex-wrap: wrap; /* allow wrapping to new lines */
+  justify-content: space-around; /* space around each card */
+  gap: 20px; /* gap between cards */
+}
+
+/* Style each movie card */
+.coming-soon-component .movie {
+  display: flex;
+  flex-direction: column; /* image on top, text below */
+  align-items: center;
+  padding: 10px;
+  width: 160px; /* same width as image */
+}
+
+/* Image sizing */
+.coming-soon-component .movie img {
+  width: 160px;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Movie title */
+.coming-soon-component .movie h3 {
+  font-size: 0.8rem;
+  text-align: center;
+  margin-top: 8px;
+}
+
+
+/*footer*/
+/*.top-footer*/
+.top-footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+.top-footer .company a{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+} 
+
+.top-footer .more a{
+  display: flex;
+  flex-direction: column;
+} 
+.top-footer .media{
+  margin-right: 100px;
+}
+
+.top-footer .media .app{
+  padding:10px;
+  display: flex;
+  gap:20px;
+}
+
+
+.android, .ios {
+  border: 2px solid red;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px; /* add height so it's a perfect circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.android i, .ios i {
+  font-size: 16px; /* adjust icon size */
+}
+
+.social-media{
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.social-media div{
+    border: 2px solid red;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px; /* add height so it's a perfect circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-media div i{
+  font-size: 16px; /* adjust icon size */
+}
+
+.payment {
+  display: flex;
+}
+
+.payment-methods {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 360px;
+  gap: 10px; 
+  padding: 10px 0;
+}
+
+.payment-methods img {
+  width: 100px;
+  height: 40px;
+  object-fit: contain; 
+}
+
+.payment .payment-app:nth-of-type(2) img {
+  width: 120px; 
+  height: 40px; 
+}
+
+.payment .payment-methods:nth-of-type(3) img {
+  width: 60px; /* Match base width */
+  height: 40px; /* Match base height */
+}
+footer .copy-right{
+  border-top: 1px solid grey;
+}
+footer .copy-right h4{
+  margin-top: 10px;
+  text-align: center;
+  padding: 10px;
 }

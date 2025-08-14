@@ -56,3 +56,18 @@ document.querySelectorAll("a[data-link]").forEach(link => {
       .catch(err => console.error("Error loading page:", err));
   });
 });
+
+const movieUrl = "https://jsonfakery.com/movies/simple-paginate";
+
+fetch(movieUrl)
+  .then(res => res.json())
+  .then(data => {
+    if (data.Search) {
+      data.Search.forEach(movie => {
+        console.log(movie.original_title); // Each movie title
+      });
+    } else {
+      console.log("No movies found.");
+    }
+  })
+  .catch(err => console.error("Error:", err));
