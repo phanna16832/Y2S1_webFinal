@@ -1,337 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Legend Cinema - Promotions</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(135deg, #1a0000 0%, #000000 50%, #1a0000 100%);
-            color: white;
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-        }
-
-        /* Header */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            gap: 30px;
-            background-color: transparent;
-            backdrop-filter: blur(8px);
-            border-bottom: 2px solid red;
-            padding: 20px 20px;
-            width: 100%;
-            height: 80px;
-        }
-
-        .search-box {
-            display: flex;
-            margin: 10px;
-            padding: 5px;
-            gap: 30px;
-            border: 2px solid #fff;
-            border-radius: 20px;
-            width: 290px;
-            height: 30px;
-            cursor: pointer;
-        }
-
-        .search-box input {
-            border: none;
-            outline: none;
-            background: transparent;
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .search-box button {
-            border: none;
-            background-color: transparent;
-            color: #fff;
-            cursor: pointer;
-            margin-left: auto;
-            width: 24px;
-            height: 24px;
-            display: flex;
-        }
-
-        .right-navbar {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .right-navbar a {
-            display: flex;
-            width: 100px;
-            height: 40px;
-            border: 2px solid #fff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 20px;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .right-navbar a:nth-child(3) {
-            border: 2px solid #fff;
-            border-radius: 60%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-        }
-
-        /* Nav */
-        nav {
-            position: sticky;
-            top: 80px;
-            z-index: 99;
-            padding: 10px 5px;
-            display: flex;
-            justify-content: space-around;
-            background-color: transparent;
-            backdrop-filter: blur(8px);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-
-        nav ul li a,
-        nav ul li i {
-            text-decoration: none;
-            color: grey;
-        }
-
-        nav ul li:nth-child(1) i {
-            color: red;
-        }
-
-        nav ul li a:hover,
-        nav ul li i:hover {
-            color: #fff;
-        }
-
-        /* Main promotion content */
-        .promotion-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-            min-height: calc(100vh - 160px);
-        }
-
-        .poster {
-            width: 100%;
-            max-width: 950px;
-            margin-bottom: 30px;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-        }
-
-        .poster img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 18px;
-            object-fit: cover;
-        }
-
-        .promotion-content h1 {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #fff;
-            margin: 20px 0 30px;
-            text-align: left;
-            width: 100%;
-            max-width: 950px;
-        }
-
-        /* FIXED: Promotion grid layout */
-        .promotion {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            width: 100%;
-            max-width: 950px;
-        }
-
-        .promotion-box {
-            background-color: #1a1a1a;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            height: 280px;
-        }
-
-        .promotion-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.3);
-        }
-
-        .promotion-box img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .promotion-box h4 {
-            padding: 20px;
-            color: #fff;
-            font-size: 0.9rem;
-            font-weight: 400;
-            line-height: 1.4;
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            text-align: left;
-            margin: 0;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .promotion {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .promotion-box {
-                height: 250px;
-            }
-
-            .promotion-box img {
-                height: 150px;
-            }
-
-            .promotion-content h1 {
-                font-size: 1.5rem;
-                text-align: center;
-            }
-
-            header {
-                flex-direction: column;
-                height: auto;
-                padding: 15px;
-                gap: 15px;
-            }
-
-            .search-box {
-                width: 250px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .promotion {
-                padding: 0 10px;
-            }
-
-            .promotion-box h4 {
-                padding: 15px;
-                font-size: 0.85rem;
-            }
-        }
-    </style>
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="promotion.css" />
+  </head>
+  <body>
     <header>
-        <div class="search-box">
-            <input type="search" name="search" id="search" placeholder="Search Movies..."/>
-            <button>
-                <i class="fa-solid fa-search"></i>
-            </button>
-        </div>
-        <img src="img/logo.png" alt="logo" style="height: 40px;"/>
-        <div class="right-navbar">
-            <a href="#" class="ticket">
-                <i class="fa-solid fa-ticket"></i>
-                <span>Ticket</span>
-            </a>
-            <a href="#">
-                <i class="fa-solid fa-user"></i>
-                <span>Profile</span>
-            </a>
-            <a href="#" class="bell">
-                <i class="fa-solid fa-bell"></i>
-            </a>
-        </div>
+      <div class="search-box">
+        <input
+          type="search"
+          name="search"
+          id="search"
+          placeholder="Search Movies..."
+        />
+        <button>
+          <i class="fa-solid fa-search"></i>
+        </button>
+      </div>
+      <img src="img/logo.png" alt="logo" style="height: 40px" />
+      <div class="right-navbar">
+        <a href="ticket.html" class="ticket">
+          <i class="fa-solid fa-ticket"></i>
+          <span>Ticket</span>
+        </a>
+        <a href="login.html">
+          <i class="fa-solid fa-user"></i>
+          <span>Profile</span>
+        </a>
+        <a class="bell">
+          <i class="fa-solid fa-bell"></i>
+        </a>
+      </div>
     </header>
 
     <nav>
-        <ul>
-            <li>
-                <i class="fa-solid fa-house"></i>
-                <a href="">Home</a>
-            </li>
-            <li>
-                <i class="fa-solid fa-location-dot"></i>
-                <a href="#">Cinemas</a>
-            </li>
-            <li>
-                <i class="fa-solid fa-cookie-bite"></i>
-                <a href="">F&B</a>
-            </li>
-            <li>
-                <i class="fa-solid fa-ticket"></i>
-                <a href="">Offer</a>
-            </li>
-        </ul>
-        <div class="cinema-location">
-            <i class="fa-solid fa-location-dot"></i>
-            All Cinemas
-        </div>
+      <ul>
+        <li>
+          <i class="fa-solid fa-house"></i>
+          <a href="index.html">Home</a>
+        </li>
+        <li>
+          <i class="fa-solid fa-location-dot"></i>
+          <a href="cinema.html">Cinemas</a>
+        </li>
+        <li>
+          <i class="fa-solid fa-ticket"></i>
+          <a href="promotion.html">Offer</a>
+        </li>
+      </ul>
     </nav>
 
     <section class="promotion-content">
-        <div class="poster">
-            <img src="img/poster5.jpeg" alt="Main Promotion"/>
+      <div class="poster">
+        <img src="img/poster5.jpeg" alt="Main Promotion" />
+      </div>
+
+      <h1>Promotions</h1>
+
+      <div class="promotion">
+        <div class="promotion-box">
+          <img src="img/p1.jpeg" alt="Student Promotion" />
+          <h4>
+            Special price for students and senior citizen. Applicable on week
+            days, ...
+          </h4>
         </div>
-        
-        <h1>Promotions</h1>
-        
-        <div class="promotion">
-            <div class="promotion-box">
-                <img src="img/p1.jpeg" alt="Student Promotion"/>
-                <h4>Special price for students and senior citizen. Applicable on week days, ...</h4>
-            </div>
-            
-            <div class="promotion-box">
-                <img src="img/p2.jpeg" alt="Undertaker Promotion"/>
-                <h4>Hurry up! The Undertaker is now showing! Book your tickets at any Lege..</h4>
-            </div>
-            
-            <div class="promotion-box">
-                <img src="img/p3.jpeg" alt="Membership Promotion"/>
-                <h4>Unlock Incredible Perks with Legend Membership Card!</h4>
-            </div>
-            
-            <div class="promotion-box">
-                <img src="img/p4.jpeg" alt="Diamond Member Promotion"/>
-                <h4>Become a Legend Diamond Member unlock a world of exclusivity and...</h4>
-            </div>
+
+        <div class="promotion-box">
+          <img src="img/p2.jpeg" alt="Undertaker Promotion" />
+          <h4>
+            Hurry up! The Undertaker is now showing! Book your tickets at any
+            Lege..
+          </h4>
         </div>
+
+        <div class="promotion-box">
+          <img src="img/p3.jpeg" alt="Membership Promotion" />
+          <h4>Unlock Incredible Perks with Legend Membership Card!</h4>
+        </div>
+
+        <div class="promotion-box">
+          <img src="img/p4.jpeg" alt="Diamond Member Promotion" />
+          <h4>
+            Become a Legend Diamond Member unlock a world of exclusivity and...
+          </h4>
+        </div>
+      </div>
     </section>
-</body>
+    <script>
+      const cinemaLocationButton = document.querySelector(".cinema-location");
+      const locationList = document.querySelector(".location");
+
+      cinemaLocationButton.addEventListener("click", function () {
+        locationList.style.display =
+          locationList.style.display === "block" ? "none" : "block";
+      });
+    </script>
+  </body>
 </html>
