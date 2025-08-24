@@ -4,24 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <!-- css -->
-     <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="login.css">
+    <script src="https://kit.fontawesome.com/57ed790bdb.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="Content">
-        <div class="qrPage">
-            <h1>Scan Here to go to Default Website</h1>
-            <img src="" alt="qr code">
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html">
+                    <img src="img/logo.png" alt="Legend Cinema Logo">
+                </a>
+            </li>
+            <li></li>
+        </ul>
+        <div class="lang-selector">
+            <span class="lang-flag"></span>
+            <span class="lang-text">EN</span>
+            <i class="fa-solid fa-chevron-down"></i>
         </div>
-        <div class="login-form">
-    <form action="">
-        <label for="UserName">UserName: </label>
-        <input type="text" name="username" id="userName" placeholder="Enter username"><br><br>
-        <label for="password">Password: </label>
-        <input type="password" name="password" id="password" placeholder="Enter password"><br><br>
-        <button>Login</button>
-    </form>
+    </nav>
+    <header>
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="#">Log In</a>
+    </header>
+    <div class="content">
+        <div class="main-card">
+            <div class="image-section"></div>
+            <div class="form-section">
+                <div class="tab-buttons">
+                    <button class="tab-button active" id="login-tab">Log In</button>
+                    <button class="tab-button" id="signup-tab">Sign Up</button>
+                </div>
+                <!-- Message display area -->
+                <div id="message-area" class="text-center text-red-500 mb-4"></div>
+
+                <div id="login-form-container" class="form-container active">
+                    <p class="instruction-text">You can use your phone number or username</p>
+                    <div class="tab-input-toggle">
+                        <button class="input-toggle-btn active">Username</button>
+                        <button class="input-toggle-btn">Phone Number</button>
+                    </div>
+
+                    <form id="login-form">
+                        <label for="username-login" class="sr-only">Username</label>
+                        <div class="input-group">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="username-login" placeholder="Username">
+                        </div>
+                        <label for="password-login" class="sr-only">Password</label>
+                        <div class="input-group">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="password-login" placeholder="Password">
+                            <i class="fa-solid fa-eye-slash password-toggle-icon"></i>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                        <button type="submit" class="continue-btn">Continue</button>
+                    </form>
+                </div>
+
+                <div id="signup-form-container" class="form-container">
+                    <p class="instruction-text">Create your account to get started.</p>
+                    <form id="signup-form">
+                        <label for="username-signup" class="sr-only">Username</label>
+                        <div class="input-group">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="username-signup" placeholder="Username">
+                        </div>
+                        <label for="phone-signup" class="sr-only">Phone Number</label>
+                        <div class="input-group">
+                            <i class="fa-solid fa-phone"></i>
+                            <input type="tel" id="phone-signup" placeholder="Phone Number">
+                        </div>
+                        <label for="password-signup" class="sr-only">Password</label>
+                        <div class="input-group">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="password-signup" placeholder="Password">
+                            <i class="fa-solid fa-eye-slash password-toggle-icon"></i>
+                        </div>
+                        <button type="submit" class="continue-btn">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
+    <script src="login.js"></script>
 </body>
 </html>

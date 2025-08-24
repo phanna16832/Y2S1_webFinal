@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legend Cinema - Locations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a0000 0%, #000000 50%, #1a0000 100%);
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 30px;
+            background-color: transparent;
+            backdrop-filter: blur(8px);
+            border-bottom: 2px solid red;
+            padding: 20px 20px;
+            width: 100%;
+            height: 80px;
+        }
+
+        .search-box {
+            display: flex;
+            margin: 10px;
+            padding: 5px;
+            gap: 30px;
+            border: 2px solid #fff;
+            border-radius: 20px;
+            width: 290px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .search-box input::placeholder {
+            color: #ccc;
+        }
+
+        .search-box button {
+            border: none;
+            background-color: transparent;
+            color: #fff;
+            cursor: pointer;
+            margin-left: auto;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .right-navbar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .right-navbar a {
+            display: flex;
+            width: 100px;
+            height: 40px;
+            border: 2px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 20px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .lang {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border: 2px solid #fff;
+            border-radius: 20px;
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        .lang-selected {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #fff;
+        }
+
+        .language-list {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 10px 0;
+            min-width: 120px;
+            z-index: 1000;
+        }
+
+        .language-list span,
+        .language-list a {
+            display: block;
+            padding: 8px 15px;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .language-list span:hover,
+        .language-list a:hover {
+            background: #444;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 80px;
+            z-index: 99;
+            padding: 10px 5px;
+            display: flex;
+            justify-content: space-around;
+            background-color: transparent;
+            backdrop-filter: blur(8px);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav ul li a,
+        nav ul li i {
+            text-decoration: none;
+            color: grey;
+        }
+
+        nav ul li:nth-child(2) i,
+        nav ul li:nth-child(2) a {
+            color: red;
+        }
+
+        nav ul li a:hover,
+        nav ul li i:hover {
+            color: #fff;
+        }
+
+        /* Main Content */
+        .cinema-content {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cinema-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .cinema-header h1 {
+            font-size: 2rem;
+            color: #fff;
+        }
+
+        .cinema-search {
+            position: relative;
+        }
+
+        .cinema-search input {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 25px;
+            padding: 12px 50px 12px 20px;
+            color: #fff;
+            font-size: 1rem;
+            width: 350px;
+            outline: none;
+        }
+
+        .cinema-search input::placeholder {
+            color: #888;
+        }
+
+        .cinema-search button {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        /* Cinema Grid */
+        .cinema-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .cinema-card {
+            background: #2a2a2a;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cinema-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .cinema-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .cinema-info {
+            padding: 20px;
+        }
+
+        .cinema-info h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .cinema-location {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .cinema-location i {
+            color: red;
+            margin-top: 2px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cinema-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .cinema-search input {
+                width: 100%;
+            }
+
+            .cinema-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 15px;
+            }
+
+            .search-box {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="search-box">
+            <input type="search" name="search" id="search" placeholder="Search Movies..."/>
+            <button>
+                <i class="fa-solid fa-search"></i>
+            </button>
+        </div>
+        <img src="https://via.placeholder.com/100x50/ff0000/ffffff?text=LEGEND" alt="logo" style="height: 40px;"/>
+        <div class="right-navbar">
+            <a href="#" class="ticket">
+                <i class="fa-solid fa-ticket"></i>
+                <span>Ticket</span>
+            </a>
+            <a href="#">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+            </a>
+            <a href="#" class="bell">
+                <i class="fa-solid fa-bell"></i>
+            </a>
+            <div class="lang">
+                <span class="lang-selected">
+                    EN 
+                    <i class="fa-solid fa-chevron-down"></i>
+                </span>
+                <div class="language-list">
+                    <span>English</span>
+                    <span>ភាសាខ្មែរ</span>
+                    <span>中文</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li>
+                <i class="fa-solid fa-house"></i>
+                <a href="#">Home</a>
+            </li>
+            <li>
+                <i class="fa-solid fa-location-dot"></i>
+                <a href="#">Cinemas</a>
+            </li>
+            <li>
+                <i class="fa-solid fa-cookie-bite"></i>
+                <a href="#">F&B</a>
+            </li>
+            <li>
+                <i class="fa-solid fa-ticket"></i>
+                <a href="#">Offer</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="cinema-content">
+        <div class="cinema-header">
+            <h1>Cinema:</h1>
+            <div class="cinema-search">
+                <input type="search" id="cinemaSearch" placeholder="Search Location...">
+                <button type="button">
+                    <i class="fa-solid fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="cinema-grid" id="cinemaGrid">
+            <!-- Cinema cards will be populated by JavaScript -->
+        </div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <i class="fa-solid fa-location-slash"></i>
+            <h3>No cinemas found</h3>
+            <p>Try adjusting your search terms</p>
+        </div>
+    </main>
+
+    <script>
+        // Cinema data
+        const cinemas = [
+            {
+                id: 1,
+                name: "Legend Cinema 271 Mega Mall",
+                location: "3rd Floor, Chip Mong Mega Mall, Street 271, Phnom Penh",
+                image: "https://via.placeholder.com/350x200/2196F3/ffffff?text=271+Mega+Mall"
+            },
+            {
+                id: 2,
+                name: "Legend Cinema Sihanoukville",
+                location: "PCB-5-021, 4th Floor of Prince Mall, Sihanoukville",
+                image: "https://via.placeholder.com/350x200/FF5722/ffffff?text=Sihanoukville"
+            },
+            {
+                id: 3,
+                name: "Legend Eden Garden",
+                location: "City Center Boulevard, Sangkat Srah Chork, Khan Daun Penh",
+                image: "https://via.placeholder.com/350x200/4CAF50/ffffff?text=Eden+Garden"
+            },
+            {
+                id: 4,
+                name: "Legend K Mall",
+                location: "2nd floor, K Mall, Street 598, Boeung Kak 1, Toul Kork",
+                image: "https://via.placeholder.com/350x200/9C27B0/ffffff?text=K+Mall"
+            },
+            {
+                id: 5,
+                name: "Legend Meanchey",
+                location: "3rd Floor of New Steung Mean Chey Market, Khan Mean Chey",
+                image: "https://via.placeholder.com/350x200/FF9800/ffffff?text=Meanchey"
+            },
+            {
+                id: 6,
+                name: "Legend Midtown Mall",
+                location: "1st Floor Midtown Mall, Street 182, Khan Daun Penh",
+                image: "https://via.placeholder.com/350x200/795548/ffffff?text=Midtown"
+            },
+            {
+                id: 7,
+                name: "Legend TK Avenue",
+                location: "2nd Floor TK Avenue Mall, Street 598, Khan Toul Kork",
+                image: "https://via.placeholder.com/350x200/607D8B/ffffff?text=TK+Avenue"
+            },
+            {
+                id: 8,
+                name: "Legend Sorya Shopping Center",
+                location: "7th Floor Sorya Shopping Center, Street 63, Khan Daun Penh",
+                image: "https://via.placeholder.com/350x200/E91E63/ffffff?text=Sorya"
+            }
+        ];
+
+        let filteredCinemas = [...cinemas];
+
+        // Render cinemas
+        function renderCinemas(cinemasToRender) {
+            const grid = document.getElementById('cinemaGrid');
+            const noResults = document.getElementById('noResults');
+
+            if (cinemasToRender.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+            
+            grid.innerHTML = cinemasToRender.map(cinema => `
+                <div class="cinema-card" onclick="selectCinema(${cinema.id})">
+                    <img src="${cinema.image}" alt="${cinema.name}">
+                    <div class="cinema-info">
+                        <h3>${cinema.name}</h3>
+                        <div class="cinema-location">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>${cinema.location}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Search functionality
+        function searchCinemas() {
+            const searchTerm = document.getElementById('cinemaSearch').value.toLowerCase();
+            
+            filteredCinemas = cinemas.filter(cinema => 
+                cinema.name.toLowerCase().includes(searchTerm) || 
+                cinema.location.toLowerCase().includes(searchTerm)
+            );
+            
+            renderCinemas(filteredCinemas);
+        }
+
+        // Cinema selection
+        function selectCinema(cinemaId) {
+            const cinema = cinemas.find(c => c.id === cinemaId);
+            alert(`Selected: ${cinema.name}\nLocation: ${cinema.location}`);
+            // Here you would typically navigate to cinema details or movie listings
+        }
+
+        // Language dropdown functionality
+        function toggleLanguageDropdown() {
+            const dropdown = document.querySelector('.language-list');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial render
+            renderCinemas(filteredCinemas);
+
+            // Search input listener
+            const searchInput = document.getElementById('cinemaSearch');
+            searchInput.addEventListener('input', searchCinemas);
+            
+            // Search button listener
+            document.querySelector('.cinema-search button').addEventListener('click', searchCinemas);
+
+            // Language dropdown
+            document.querySelector('.lang').addEventListener('click', toggleLanguageDropdown);
+            
+            // Close language dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.lang')) {
+                    document.querySelector('.language-list').style.display = 'none';
+                }
+            });
+
+            // Language selection
+            document.querySelectorAll('.language-list span, .language-list a').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const selectedLang = this.textContent;
+                    document.querySelector('.lang-selected').innerHTML = `${selectedLang} <i class="fa-solid fa-chevron-down"></i>`;
+                    document.querySelector('.language-list').style.display = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,189 +1,155 @@
-const dateComponent = document.querySelector(".pagination");
-const today = new Date();
-let i = 0;
-while (i <= 5) {
-  let future = new Date(today);
-  future.setDate(today.getDate() + i);
 
-  const span = document.createElement("span");
-  span.innerText = future.toLocaleDateString("en-US", { weekday: "short" });
 
-  const h1 = document.createElement("h1");
-  h1.innerText = future.getDate();
+// 🎬 Toggle cinema location dropdown
+const cinemaLocationButton = document.querySelector(".cinema-location");
+const locationList = document.querySelector(".location");
 
-  const newDiv = document.createElement("div");
-  newDiv.className = "box";
-
-  dateComponent.appendChild(newDiv);
-  newDiv.appendChild(span);
-  newDiv.appendChild(h1);
-  i++;
-}
-
-const cinemaLocation = document.querySelector(".cinema-location");
-const locationEl = document.querySelector(".location"); // no space before .location
-
-cinemaLocation.addEventListener("click", function () {
-  if (locationEl.style.display === "block") {
-    locationEl.style.display = "none";
-  } else {
-    locationEl.style.display = "block";
-  }
+cinemaLocationButton.addEventListener("click", function () {
+  locationList.style.display =
+    locationList.style.display === "block" ? "none" : "block";
 });
 
-// coming soon
-const monthPag = document.querySelector(".coming-soon-component .pagination");
-for (let i = 1; i <= 6; i++) {
-  let futureMonth = new Date(today);
-  futureMonth.setMonth(today.getMonth() + i);
-  const monthList = document.createElement("span");
-  monthList.innerText = futureMonth.toLocaleDateString("en-US", {
-    month: "long",
-  });
-  monthPag.appendChild(monthList);
-  monthList.className = "month-list";
+// 🎞️ Slider functionality
+const slider = document.getElementById("slider");
+const slides = slider.querySelectorAll("img");
+const navDots = document.querySelectorAll("#sliderNav a");
+
+let currentSlideIndex = 0;
+let autoPlay = setInterval(showNextSlide, 3000);
+
+function goToSlide(slideIndex) {
+  currentSlideIndex = slideIndex;
+  slider.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+  updateNavigationDots();
 }
 
-const nowShowTitle = document.querySelector(".now-show-component h1");
-const comingsoonTitle = document.querySelector(".coming-soon-component h1");
-const nowShowComponent = document.querySelector(".nsc");
-const comingsoonComponent = document.querySelector(".csc");
+function showNextSlide() {
+  currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+  goToSlide(currentSlideIndex);
+}
 
+function updateNavigationDots() {
+  navDots.forEach((dot) => dot.classList.remove("active"));
+  navDots[currentSlideIndex].classList.add("active");
+}
 
+navDots.forEach((dot) => {
+  dot.addEventListener("click", () => {
+    clearInterval(autoPlay);
+    goToSlide(Number(dot.dataset.index));
+    autoPlay = setInterval(showNextSlide, 3000);
+  });
+});
 
-nowShowTitle.addEventListener("click", function() {
-  nowShowComponent.style.display = "block";
-  comingsoonComponent.style.display = "none";
-  nowShowTitle.style.color = "#fff";
-  comingsoonTitle.style.color = "grey"
+goToSlide(0);
+
+// 📅 Generate dates for "Now Showing"
+const nowShowingDates = document.querySelector(
+  ".now-show-component .pagination"
+);
+const today = new Date();
+
+for (let i = 0; i <= 4; i++) {
+  const futureDate = new Date(today);
+  futureDate.setDate(today.getDate() + i);
+
+  const dateBox = document.createElement("div");
+  dateBox.className = "box";
+  if (i === 0) dateBox.classList.add("active");
+
+  const dayName = document.createElement("span");
+  dayName.className = "day";
+  dayName.innerText = futureDate.toLocaleDateString("en-US", {
+    weekday: "short",
   });
 
-  comingsoonTitle.addEventListener("click", function() {
-      nowShowComponent.style.display = "none";
-      comingsoonComponent.style.display = "block";
-      nowShowTitle.style.color = "grey";
-  comingsoonTitle.style.color = "#fff"
+  const dayNumber = document.createElement("h3");
+  dayNumber.className = "date";
+  dayNumber.innerText = futureDate.getDate();
+
+  dateBox.append(dayName, dayNumber);
+  nowShowingDates.appendChild(dateBox);
+}
+
+// 📆 Generate months for "Coming Soon"
+const comingSoonMonths = document.querySelector(
+  ".coming-soon-component .pagination"
+);
+const currentMonth = new Date();
+
+for (let i = 1; i <= 4; i++) {
+  const futureMonth = new Date(currentMonth);
+  futureMonth.setMonth(currentMonth.getMonth() + i);
+
+  const monthButton = document.createElement("span");
+  monthButton.innerText = futureMonth.toLocaleDateString("en-US", {
+    month: "short",
   });
 
+  comingSoonMonths.appendChild(monthButton);
+}
 
-  //movie component
-// Your OMDb API key
-const apiKey = "3904f905";
+// 🎥 Movie card rendering
+const nowShowingContainer = document.getElementById("nowShowingContainer");
+const comingSoonContainer = document.getElementById("comingSoonContainer");
 
-// Search term
-const searchQuery = "guardians"; 
+fetch("Film.json")
+  .then((response) => response.json())
+  .then((films) => {
+    function renderMovies(container, filmList) {
+      container.innerHTML = "";
+      filmList.forEach((film) => {
+        const movieCard = document.createElement("div");
+        movieCard.classList.add("movie-item");
 
-// OMDb search URL
-const searchUrl = `http://www.omdbapi.com/?s=${searchQuery}&apikey=${apiKey}`;
+        movieCard.innerHTML = `
+          <img src="${film.image}" alt="${film.title}" width="200">
+          <h3>${film.title}</h3>
+          <p>Release Date: ${film.release_date}</p>
+          <p>Type: ${film.type}</p>
+        `;
 
-// Fetch search results from OMDb API
-fetch(searchUrl)
-  .then(response => response.json())
-  .then(data => {
-    if (data.Search) {
-      // Limit results to first 5 movies
-      const limitedMovies = data.Search.slice(0, 5);
+        // 👉 When user clicks, save selected movie and redirect
+        movieCard.addEventListener("click", () => {
+          localStorage.setItem("selectedMovie", JSON.stringify(film));
+          window.location.href = "order.html";
+        });
 
-      // Log movie info in console
-      limitedMovies.forEach(movie => {
-        console.log(movie.Title, movie.Year, movie.imdbID);
+        container.appendChild(movieCard);
       });
-
-      // Display movies in HTML
-      displayMovies(limitedMovies);
-    } else {
-      console.log("No movies found");
     }
+
+    renderMovies(nowShowingContainer, films);
+    renderMovies(comingSoonContainer, [...films].reverse());
   })
-  .catch(error => console.error('Error:', error));
+  .catch((error) => console.error("There was an error getting the films:", error));
 
-// Function to display movies in HTML
-function displayMovies(movies) {
-  const container = document.querySelector(".movies-container");
-  container.innerHTML = ""; // Clear previous content
-  
-  movies.forEach(movie => {
-    const movieElement = document.createElement("div");
-    movieElement.className = "movie";
+// 🎭 Switch between Now Showing and Coming Soon
+const nowShowHeading = document.querySelector(".now-show-component h1");
+const comingSoonHeading = document.querySelector(".coming-soon-component h1");
 
-    // Create movie card HTML
-    movieElement.innerHTML = `
-      <h3>${movie.Title} (${movie.Year})</h3>
-      <img src="${movie.Poster}" alt="${movie.Title} poster">
-    `;
-    container.appendChild(movieElement);
-  });
-}
+const nowShowingPagination = document.querySelector(
+  ".now-show-component .pagination"
+);
+const comingSoonPagination = document.querySelector(
+  ".coming-soon-component .pagination"
+);
 
-// Function to fetch and log full movie details by IMDb ID
-function fetchMovieDetails(imdbID) {
-  const detailsUrl = `http://www.omdbapi.com/?i=${imdbID}&apikey=${apiKey}`;
-  
-  fetch(detailsUrl)
-    .then(response => response.json())
-    .then(data => {
-      console.log("Full details:", data); // Show detailed data in console
-    });
-}
+nowShowingContainer.style.display = "grid";
+nowShowingPagination.style.display = "flex";
+comingSoonContainer.style.display = "none";
+comingSoonPagination.style.display = "none";
 
+nowShowHeading.addEventListener("click", () => {
+  nowShowingContainer.style.display = "grid";
+  nowShowingPagination.style.display = "flex";
+  comingSoonContainer.style.display = "none";
+  comingSoonPagination.style.display = "none";
+});
 
-//coming-soon component movie
-// Your OMDb API key
-
-
-// Search term for "Coming Soon" movies (example: guardians)
-const comingSoonQuery = "avengers"; 
-
-// OMDb search URL
-const comingSoonUrl = `http://www.omdbapi.com/?s=${comingSoonQuery}&apikey=${apiKey}`;
-
-// Fetch "Coming Soon" results from OMDb API
-fetch(comingSoonUrl)
-  .then(response => response.json())
-  .then(data => {
-    if (data.Search) {
-      // Limit to first 5 movies
-      const limitedMovies = data.Search.slice(0, 5);
-
-      // Log in console
-      limitedMovies.forEach(movie => {
-        console.log("[Coming Soon]", movie.Title, movie.Year);
-      });
-
-      // Display in HTML
-      displayComingSoon(limitedMovies);
-    } else {
-      console.log("No 'Coming Soon' movies found");
-    }
-  })
-  .catch(error => console.error('Error:', error));
-
-// Function to display Coming Soon movies in .pagination container
-function displayComingSoon(movies) {
-  const container = document.querySelector(".coming-soon-component .pagination");
-  container.innerHTML = ""; // Clear old content
-  
-  movies.forEach(movie => {
-    const movieElement = document.createElement("div");
-    movieElement.className = "movie";
-
-    // Create movie card HTML
-    movieElement.innerHTML = `
-      <h2>${movie.Title} (${movie.Year})</h2>
-      <img src="${movie.Poster}" alt="${movie.Title} poster">
-
-    `;
-    container.appendChild(movieElement);
-  });
-}
-
-// Fetch full details for a single movie
-function fetchMovieDetails(imdbID) {
-  const detailsUrl = `http://www.omdbapi.com/?i=${imdbID}&apikey=${apiKey}`;
-  
-  fetch(detailsUrl)
-    .then(response => response.json())
-    .then(data => {
-      console.log("Full details:", data);
-    });
-}
+comingSoonHeading.addEventListener("click", () => {
+  comingSoonContainer.style.display = "grid";
+  comingSoonPagination.style.display = "flex";
+  nowShowingContainer.style.display = "none";
+  nowShowingPagination.style.display = "none";
+});

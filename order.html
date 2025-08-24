@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Ticket Booking</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #1e293b;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    h2, h3 {
+      margin: 0 0 1rem 0;
+    }
+
+    /* Movie Card */
+    .movie-card {
+      background-color: #0f172a;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      display: flex;
+      margin-bottom: 2rem;
+    }
+    .movie-poster {
+      width: 150px;
+      height: 225px;
+      object-fit: cover;
+      border-top-left-radius: 0.75rem;
+      border-bottom-left-radius: 0.75rem;
+    }
+    .movie-details {
+      padding: 1.5rem;
+      flex-grow: 1;
+    }
+    .movie-details h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #6366f1;
+    }
+    .movie-details p {
+      margin: 0.25rem 0;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    /* Form Elements */
+    select, input[type="number"] {
+      background-color: #374151;
+      border: 1px solid #4b5563;
+      color: #e2e8f0;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.375rem;
+      font-size: 1rem;
+    }
+    select:focus, input[type="number"]:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+
+    /* Options */
+    .date-option, .showtime-option {
+      background-color: #334155;
+      border: 1px solid #475569;
+      color: #e2e8f0;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      margin: 0.25rem;
+      display: inline-block;
+    }
+    .date-option:hover, .showtime-option:hover {
+      background-color: #6366f1;
+      border-color: #6366f1;
+    }
+    .date-option.selected, .showtime-option.selected {
+      background-color: #6366f1;
+      border-color: #6366f1;
+      font-weight: bold;
+    }
+
+    /* Booking Summary */
+    .booking-summary {
+      background-color: #0f172a;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    .booking-summary .row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+    .booking-summary .total {
+      font-weight: bold;
+      font-size: 1.25rem;
+      border-top: 1px solid #475569;
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* Ticket Preview */
+    .ticket-preview {
+      border: 2px dashed #475569;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      margin-top: 1.5rem;
+      text-align: center;
+      background-color: #1e293b;
+    }
+    .ticket-preview h3 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #6366f1;
+      margin-bottom: 1rem;
+    }
+    .ticket-preview .ticket-info p {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Button */
+    .book-button {
+      background-color: #22c55e;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 1.125rem;
+      font-weight: bold;
+      transition: background-color 0.2s ease-in-out;
+      margin-top: 1.5rem;
+      width: 100%;
+      border: none;
+    }
+    .book-button:hover {
+      background-color: #16a34a;
+    }
+
+    /* Hidden helper */
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="mb-6">
+      <h3 class="text-xl font-bold mb-4">Select Movie</h3>
+      <select id="movie-select"></select>
+    </div>
+
+    <div class="movie-card">
+      <img src="https://placehold.co/150x225/333/eee?text=Movie+Poster" alt="Movie Poster" class="movie-poster" id="movie-poster">
+      <div class="movie-details">
+        <h2 id="movie-title"></h2>
+        <p id="movie-type"></p>
+        <p>🗓️ Release: <span id="movie-release-date"></span></p>
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <h3>Showtime</h3>
+      <div class="flex items-center mb-4">
+        <label for="location-select" class="mr-3">All locations</label>
+        <select id="location-select">
+          <option value="legend-premium">Legend Premium Exchange Square</option>
+          <option value="legend-citymall">Legend City Mall</option>
+        </select>
+      </div>
+
+      <div id="date-options">
+        <div class="date-option selected" data-date="24 Aug">24 Aug</div>
+        <div class="date-option" data-date="25 Aug">25 Aug</div>
+        <div class="date-option" data-date="26 Aug">26 Aug</div>
+      </div>
+
+      <div id="showtime-options">
+        <div class="showtime-option" data-time="10:00 AM">10:00 AM</div>
+        <div class="showtime-option" data-time="1:00 PM">1:00 PM</div>
+        <div class="showtime-option" data-time="4:00 PM">4:00 PM</div>
+        <div class="showtime-option" data-time="7:00 PM">7:00 PM</div>
+      </div>
+    </div>
+
+    <div class="booking-summary">
+      <h3>Your Booking</h3>
+      <div class="row"><span>Movie:</span><span id="summary-movie"></span></div>
+      <div class="row"><span>Location:</span><span id="summary-location">Legend Premium Exchange Square</span></div>
+      <div class="row"><span>Date:</span><span id="summary-date">24 Aug</span></div>
+      <div class="row"><span>Time:</span><span id="summary-time">Select a time</span></div>
+      <div class="row">
+        <span>Tickets:</span>
+        <input type="number" id="num-tickets" value="1" min="1">
+      </div>
+      <div class="row total">
+        <span>Total Price:</span>
+        <span id="total-price">$0.00</span>
+      </div>
+
+      <button class="book-button" id="book-ticket-btn">Book Ticket</button>
+
+      <div id="ticket-preview" class="ticket-preview hidden">
+        <h3>Your Booked Ticket!</h3>
+        <div class="ticket-info">
+          <p><strong>Movie:</strong> <span id="booked-movie"></span></p>
+          <p><strong>Location:</strong> <span id="booked-location"></span></p>
+          <p><strong>Date:</strong> <span id="booked-date"></span></p>
+          <p><strong>Time:</strong> <span id="booked-time"></span></p>
+          <p><strong>Tickets:</strong> <span id="booked-num-tickets"></span></p>
+          <p><strong>Total:</strong> <span id="booked-total-price"></span></p>
+          <p class="mt-4" style="font-size: 0.875rem; color: #94a3b8;">Thank you for your booking!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="order.js"></script>
+</body>
+</html>
